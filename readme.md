@@ -14,7 +14,7 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente:
 ## Configuración del proyecto ⚙️
 
 * 1) # Clona
-     - git clone https://github.com/tu-usuario/theocratic-app.git
+     - git clone git@github.com:Jestruyo/TheocraticApp.git
      - cd theocratic-app
 
 * 2) # Configurar Twilio
