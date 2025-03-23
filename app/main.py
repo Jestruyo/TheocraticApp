@@ -22,7 +22,7 @@ user_state = {}
 @app.route('/webhook', methods=['POST'])
 def webhook():
     from_number = request.form.get('From')  # Número del usuario (formato WhatsApp)
-    message_body = request.form.get('Body')
+    message_body = request.form.get('Body') # Cuerpo del mensaje
 
     # Inicializar el estado del usuario si no existe
     if from_number not in user_state:
@@ -52,11 +52,11 @@ def webhook():
         if message_body.lower() == 'si':
             # Confirmación exitosa
             client.messages.create(
-                body=f'Perfecto, {user_state[from_number]["nombre"]}. Ya me voy a bañar y dile a sarah que si voy.',
+                body=f'Perfecto, {user_state[from_number]["nombre"]}. Gracias por tu dia de trabajo, a domir y comer.',
                 from_=TWILIO_PHONE,  # Número de Twilio (formato WhatsApp)
                 to=from_number  # Número del usuario (formato WhatsApp)
             )
-            user_state[from_number]['state'] = 'finalizado'
+            user_state[from_number]['state'] = 'inicio'
         else:
             # Pedir el nombre nuevamente
             client.messages.create(
@@ -69,4 +69,4 @@ def webhook():
     return jsonify({'status': 'success'}), 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
