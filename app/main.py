@@ -43,7 +43,7 @@ def webhook():
         # Guardar el nombre y pedir confirmación
         user_state[from_number]['nombre'] = message_body
         client.messages.create(
-            body=f'*Estoy para servirte {message_body} 😊 ¿Como puedo ayudarte?* Ingresa el número de tu opción: \n \n 🕒 *1. Hora de reuniones* \n 🏠 *2. Lugares de Predicación* \n 📝 *3. Envio de informes* \n 📋 *4. Solicitudes y formularios*',
+            body=f'*Estoy para servirte {message_body} 😊 ¿Como puedo ayudarte?* Ingresa el número de tu opción requerida: \n \n 🕒 *1. Hora de reuniones.* \n 🏠 *2. Lugares de Predicación.* \n 📝 *3. Envio de informes.* \n 📋 *4. Solicitudes y formularios.*',
             from_=TWILIO_PHONE,  # Número de Twilio (formato WhatsApp)
             to=from_number  # Número del usuario (formato WhatsApp)
         )
@@ -58,14 +58,14 @@ def webhook():
                 to=from_number  # Número del usuario (formato WhatsApp)
             )
             user_state[from_number]['state'] = 'inicio'
-        else:
+        elif message_body.lower() == '2':
             # Pedir el nombre nuevamente
             client.messages.create(
-                body='Por favor, ingresa tu nombre nuevamente.',
+                body=f'*A continuación te comparto los lugares de salida al servicio del campo:* \n \n *Lunes:* \n 🏫 *1. Salón del Reino* | \n Faceta (pública) Hora (6:50 pm). \n \n *Martes:* \n 🏠 *2. Hra Esther Rua* | \n Faceta (cartas) Hora (9:00 am). \n Faceta (casa en casa) Hora (4:30 pm). \n \n *Miercoles:* \n 🏠 *3. Hra Rosalba Serge* | \n Faceta (casa en casa) Hora (9:00 am). \n Faceta (casa en casa) Hora (4:30 pm)',
                 from_=TWILIO_PHONE,  # Número de Twilio (formato WhatsApp)
                 to=from_number  # Número del usuario (formato WhatsApp)
             )
-            user_state[from_number]['state'] = 'solicitar_nombre'
+            user_state[from_number]['state'] = 'inicio'
 
 
     return jsonify({'status': 'success'}), 200
