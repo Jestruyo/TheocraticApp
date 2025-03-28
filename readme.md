@@ -34,6 +34,11 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente:
         * ACCOUNT_SID=your_account_sid
         * AUTH_TOKEN=your_auth_token
         * TWILIO_PHONE=whatsapp:+14155238886
+        * Recuerda agregar las configuraciones de los usuarios que usaran el bot:
+           Ejemplo:
+                    USER_ADMIN_NAME = "Jesus Trujillo" # Nombre del administrador.
+                    USER_ADMIN_NUMBER = "whatsapp:+573003758315"  # Número de WhatsApp del administrador.
+                    USER_ADMIN_PASSWORD = "jesus123"  # Contraseña del administrador.
 
 * 4) # Construir y ejecutar el contenedor Docker 🛠️ 
      - Construir la imagen de Docker: docker compose build
