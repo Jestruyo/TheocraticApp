@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Instalar dependencias del sistema necesarias (si las hay)
 # Por ejemplo, si usas bibliotecas que requieren compilación, necesitarás build-base
-RUN apk add --no-cache gcc musl-dev
+RUN apk add --no-cache gcc musl-dev libffi-dev openssl-dev
 
 # Copiar los archivos de requisitos
 COPY app/requirements.txt .
