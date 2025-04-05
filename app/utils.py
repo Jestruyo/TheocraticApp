@@ -16,16 +16,19 @@ TWILIO_PHONE = os.getenv('TWILIO_PHONE')  # Número de Twilio Sandbox
 USERS = {
     'admin': {
         'name': os.getenv('USER_ADMIN_NAME'),  # Nombre del administrador
+        'lastname': os.getenv('USER_ADMIN_LASTNAME'), # Apellidos del administrador
         'number': os.getenv('USER_ADMIN_NUMBER'),  # Número del administrador (formato WhatsApp)
         'password': os.getenv('USER_ADMIN_PASSWORD')  # Contraseña del administrador
     },
     'yurleydis': {
         'name': os.getenv('USER_YURLEYDIS_NAME'), 
+        'lastname': os.getenv('USER_YURLEYDIS_LASTNAME'),
         'number': os.getenv('USER_YURLEYDIS_NUMBER'),  
         'password': os.getenv('USER_YURLEYDIS_PASSWORD')  
     },
     'etilvia': {
         'name': os.getenv('USER_ETILVIA_NAME'), 
+        'lastname': os.getenv('USER_ETILVIA_LASTNAME'),
         'number': os.getenv('USER_ETILVIA_NUMBER'),  
         'password': os.getenv('USER_ETILVIA_PASSWORD') 
     }
@@ -46,6 +49,7 @@ def validate_user_number(number):
             return {
                 'username': username,
                 'name': user_data['name'],
+                'lastname': user_data['lastname'],
                 'number': user_data['number'],
                 'password': user_data['password']
             }
