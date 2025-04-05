@@ -163,8 +163,8 @@ def webhook():
                     \n 🏠 *Por definir* | \
                     \n Faceta (casa en casa) Hora (9:00 am).\
                     \n \n ⚠️ Si lo deseas {user_data["name"]}, *puedes volver a ingresar el número de tu opción requerida*.',
-                from_=TWILIO_PHONE,
-                to=from_number
+                from_=TWILIO_PHONE,  # Número de Twilio (formato WhatsApp)
+                to=from_number  # Número del usuario (formato WhatsApp)
             )
 
     return jsonify({'status': 'success'}), 200
