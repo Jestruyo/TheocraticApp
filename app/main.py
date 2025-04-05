@@ -45,7 +45,7 @@ def check_inactive_sessions():
                     # Envía mensaje de inactividad
                     client.messages.create(
                         body='⏳ He notado que no has interactuado en los últimos *3* minutos.\
-                             \n \nPor favor, si aún necesitas ayuda, inicia una nueva conversación.\
+                             \n \nPor favor, si aún necesitas ayuda, inicia una nueva conversación escribiendo menú.\
                              \n \n*¡Estare encantado de atenderte!* 😊',
                         from_=TWILIO_PHONE,
                         to=number
@@ -102,7 +102,7 @@ def webhook():
         return jsonify({'status': 'error'}), 400
 
     # Verificar si el usuario escribió "menu" o "menú" para reiniciar el flujo
-    if message_body in ['menu', 'menú']:
+    if message_body in ['menu', 'menú', 'Menu', 'Menú']:
         user_state[from_number] = {
             'state': 'inicio',
             'last_activity': time.time(),
@@ -125,10 +125,10 @@ def webhook():
             }
     else:
         # Nuevo usuario - inicializa su estado
-        # SOLO si es el primer mensaje y no es "menu" o "menú"
+        # SOLO si es el primer mensaje y no es 'menu', 'menú', 'Menu', 'Menú'
         if message_body not in ['menu', 'menú', 'Menu', 'Menú']:
             client.messages.create(
-                body=f'Hola {user_data["name"]} 😊 👋, por favor escribe *"menu"* , *"menú"* o *"Menú"* para comenzar.',
+                body=f'Hola {user_data["name"]} 😊 👋, por favor escribe *"menu"*,*"menú"* o *"Menú"* para comenzar.',
                 from_=TWILIO_PHONE,
                 to=from_number
             )
@@ -153,7 +153,7 @@ def webhook():
         # Envía mensaje de bienvenida con el menú principal
         client.messages.create(
             body=f'*¡Hola! Que gusto saludarte de nuevo {user_data["name"]} 😊 ¿Como puedo ayudarte?*\n\n'
-                 'Ingresa el número de tu opción requerida:\n\n'
+                 'Escribe el número de tu opción requerida:\n\n'
                  '🕒 *1. Hora de reuniones.*\n'
                  '🏠 *2. Lugares de Predicación.*\n'
                  '📝 *3. Envio de informes.*\n'
