@@ -66,8 +66,17 @@ def webhook():
     user_data = validate_user_number(from_number)
     if not user_data:
         client.messages.create(
-            body='❌ 😔 *Lo siento, no estás registrado para usar este servicio*\
-                \n \n *Si deseas registrarte, por favor contacta a tu super de grupo.*',
+            body='❌ 😔 *Lo siento, no estás registrado para usar este servicio.*\
+                \nSi deseas registrarte, por favor contacta a tu super de grupo.\
+                \n \nMientras tanto, quiero compartirte los horarios de reunión de la congregacion cordialidad:\
+                \n \n 🖥️ *1. Reunión entre semana | Jueves 7 pm*\
+                \n 📌 https://jworg.zoom.us/j/99106008401\
+                \n *Codigo de acceso:* 1234.\
+                \n \n 🖥️ *2. Reunión fin de semana | Domingo 5 pm*\
+                \n 📌 https://jworg.zoom.us/j/91928746645\
+                \n *Codigo de acceso:* 1234.\
+                \n \n 📍 *3. Direccion:* Cl. 76 # 7B - 45, El Bosque, Barranquilla, Atlántico.\
+                \n 📌 https://maps.app.goo.gl/gteL23tYX32KUeb79',
             from_=TWILIO_PHONE,
             to=from_number
         )
@@ -124,15 +133,12 @@ def webhook():
                     \n \n 🖥️ *2. Reunión fin de semana | Domingo 5 pm*\
                     \n 📌 https://jworg.zoom.us/j/91928746645\
                     \n *Codigo de acceso:* 1234.\
-                    \n \n *¿Hay algo mas en lo que pueda ayudarte {user_data["name"]}?*\
-                    \n \n 📝 Si lo deseas puedes volver a ingresar el número de tu opción requerida:\
-                    \n \n 🏠 *2. Lugares de Predicación.*\
-                    \n 📝 *3. Envio de informes.*\
-                    \n 📋 *4. Solicitudes y formularios.*\
-                    \n 🚨 *5. Lineas de emergencia.*',
+                    \n \n 📍 *3. Direccion:* Cl. 76 # 7B - 45, El Bosque, Barranquilla, Atlántico.\
+                    \n 📌 https://maps.app.goo.gl/gteL23tYX32KUeb79',
                 from_=TWILIO_PHONE,
                 to=from_number
             )
+            user_state[from_number]['state'] = 'validar_solicitud'
         elif message_body == '2':
             client.messages.create(
                 body=f'📌 *A continuación te comparto los lugares de salida al servicio del campo:*\
