@@ -45,7 +45,7 @@ def check_inactive_sessions():
                     # Envía mensaje de inactividad
                     client.messages.create(
                         body='⏳ He notado que no has interactuado en los últimos *3* minutos.\
-                             \n \nPor favor, si aún necesitas ayuda, inicia una nueva conversación escribiendo menú.\
+                             \n \nPor favor, si aún necesitas ayuda, inicia una nueva conversación escribiendo *menú*.\
                              \n \n*¡Estare encantado de atenderte!* 😊',
                         from_=TWILIO_PHONE,
                         to=number
