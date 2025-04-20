@@ -84,7 +84,7 @@ def webhook():
         # Si no está registrado, envía mensaje con información básica
         client.messages.create(
             body='❌ 😔 *Lo siento, no estás registrado para usar este servicio.*\
-                \nSi deseas registrarte, por favor contacta a tu super de grupo.\
+                \n \nSi deseas registrarte, por favor contacta a tu super de grupo.\
                 \n \nMientras tanto, quiero compartirte los horarios de reunión de la congregacion cordialidad:\
                 \n \n 🖥️ *1. Reunión entre semana | Jueves 7 pm*\
                 \n 📌 https://jworg.zoom.us/j/99106008401\
@@ -128,7 +128,7 @@ def webhook():
         # SOLO si es el primer mensaje y no es 'menu', 'menú', 'Menu', 'Menú'
         if message_body not in ['menu', 'menú', 'Menu', 'Menú']:
             client.messages.create(
-                body=f'Hola {user_data["name"]} 😊 👋, por favor escribe *"menu"*,*"menú"* o *"Menú"* para comenzar.',
+                body=f'Hola {user_data["name"]} 😊 👋, por favor escribe *"menú"* para comenzar.',
                 from_=TWILIO_PHONE,
                 to=from_number
             )
@@ -153,7 +153,7 @@ def webhook():
         # Envía mensaje de bienvenida con el menú principal
         client.messages.create(
             body=f'*¡Hola! Que gusto saludarte de nuevo {user_data["name"]} 😊 ¿Como puedo ayudarte?*\n\n'
-                 'Escribe el número de tu opción requerida:\n\n'
+                 'Escribe el # número de tu opción requerida:\n\n'
                  '🕒 *1. Hora de reuniones.*\n'
                  '🏠 *2. Lugares de Predicación.*\n'
                  '📝 *3. Envio de informes.*\n'
@@ -167,14 +167,14 @@ def webhook():
 
     elif current_state == 'validar_solicitud':
         # Verificar nuevamente si escribió "menu" o "menú"
-        if message_body in ['menu', 'menú']:
+        if message_body in ['menu', 'menú', 'Menu', 'Menú']:
             user_state[from_number]['state'] = 'inicio'
             # Volverá al inicio en la siguiente iteración
             return jsonify({'status': 'success'}), 200
         
         # Procesa la opción seleccionada por el usuario
         if message_body == '1':
-            # Opción 1: Horario de reuniones
+            # Opción 1: Horario de reuniones.
             client.messages.create(
                 body=f'*Estos son los enlaces a la plataforma zoom:*\
                     \n \n 🖥️ *1. Reunión entre semana | Jueves 7 pm*\
@@ -187,7 +187,7 @@ def webhook():
                     \n 📌 https://maps.app.goo.gl/gteL23tYX32KUeb79\
                     \n \n 🌐 *4. Sitio oficial:*\
                     \n 📌 https://www.jw.org/es/\
-                    \n \n 📢 *Recuerda:* Puedes volver a ingresar, si lo deseas, la palabra *"menu"* , *"menú"* o *"Menú"*, para regresar al menú principal.',
+                    \n \n 📢 *Recuerda:* Puedes volver a ingresar si lo deseas la palabra, *"menú"* para regresar al menú principal.',
                 from_=TWILIO_PHONE,
                 to=from_number
             )
@@ -195,7 +195,7 @@ def webhook():
             user_state[from_number]['state'] = 'validar_solicitud'
 
         elif message_body == '2':
-            # Opción 2: Lugares de predicación
+            # Opción 2: Lugares de predicación.
             client.messages.create(
                 body=f'📌 *A continuación te comparto los lugares de salida al servicio del campo:*\
                     \n \n *Lunes:*\
@@ -228,7 +228,27 @@ def webhook():
                 from_=TWILIO_PHONE,
                 to=from_number
             )
-        # (Aquí irían las opciones 3, 4 y 5 cuando se implementen)
+            user_state[from_number]['state'] = 'validar_solicitud'
+
+        elif message_body == '3':
+            
+            # Opción 3: Envio de informes.
+            user_state[from_number]['state'] = 'enviando_informe_fecha'
+            # Creamos un objeto para almacenar el reporte con datos básicos del usuario
+            user_state[from_number]['reporte_actual'] = {
+                'usuario': {
+                    'nombre': user_data['name'],
+                    'numero': from_number,
+                },
+                'datos': {}  # Aquí almacenaremos los datos del informe
+            }
+            client.messages.create(
+                body='🗓️ Por favor, ingresa la *fecha* del informe en formato *AAAA-MM-DD*:',
+                from_=TWILIO_PHONE,
+                to=from_number
+            )
+            
+
 
     # Retorna respuesta exitosa
     return jsonify({'status': 'success'}), 200
