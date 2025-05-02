@@ -134,6 +134,7 @@ def webhook():
             )
             return jsonify({'status': 'success'}), 200
         else:
+            # Se abre la sesion con valor inicio.
             user_state[from_number] = {
                 'state': 'inicio',
                 'last_activity': time.time(),
@@ -152,13 +153,15 @@ def webhook():
     if current_state == 'inicio':
         # Envía mensaje de bienvenida con el menú principal
         client.messages.create(
-            body=f'*¡Hola! Que gusto saludarte de nuevo {user_data["name"]} 😊 ¿Como puedo ayudarte?*\n\n'
-                 'Escribe el # número de tu opción requerida:\n\n'
-                 '🕒 *1. Hora de reuniones.*\n'
+            body=f'*¡Ahora si, mi querid@ herman@ {user_data["name"]}. 😊 ¿Como puedo ayudarte?*\n\n'
+                 '<<Escribe el # número de tu opción requerida>>:\n\n'
+                 '🕒 *1. Horas de reuniones.*\n'
                  '🏠 *2. Lugares de Predicación.*\n'
                  '📝 *3. Envio de informes.*\n'
-                 '📋 *4. Solicitudes y formularios.*\n'
-                 '🚨 *5. Lineas de emergencia.*',
+                 '📋 *4. Solicitudes.*\n'
+                 '👌 *5. Siervos ministeriales.*\n'
+                 '🫶 *6. Ancianos.*\n'
+                 '🚨 *7. Lineas de emergencia.*\n',
             from_=TWILIO_PHONE,
             to=from_number
         )
@@ -248,7 +251,6 @@ def webhook():
                 to=from_number
             )
             
-
 
     # Retorna respuesta exitosa
     return jsonify({'status': 'success'}), 200
