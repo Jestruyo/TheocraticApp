@@ -1,10 +1,12 @@
 # Importación de bibliotecas necesarias
 from flask import Flask, request, jsonify  # Flask para el servidor web
 from twilio.rest import Client  # Cliente de Twilio para WhatsApp
+from oauth2client.service_account import ServiceAccountCredentials
+import gspread
 import time  # Para manejar tiempos de inactividad
 from threading import Thread  # Para ejecutar tareas en segundo plano
 import atexit  # Para manejar el cierre de la aplicación
-from utils import ACCOUNT_SID, AUTH_TOKEN, TWILIO_PHONE, validate_user_number  # Credenciales y funciones auxiliares
+from utils import ACCOUNT_SID, AUTH_TOKEN, TWILIO_PHONE, SCOPES, SPREADSHEET, validate_user_number  # Credenciales y funciones auxiliares
 
 # Inicialización de la aplicación Flask
 app = Flask(__name__)
@@ -15,6 +17,22 @@ client = Client(ACCOUNT_SID, AUTH_TOKEN)
 # Diccionario para almacenar el estado de cada usuario
 # Estructura: {número: {state: str, last_activity: float, inactivity_notified: bool, nombre: str}}
 user_state = {}
+
+@app.route('/enviar', methods=['POST'])
+def enviar_datos():
+    creds = ServiceAccountCredentials.from_json_keyfile_name("credentials_googlesheets.json", SCOPES)
+    client = gspread.authorize(creds)
+    spreadsheet = client.open(SPREADSHEET)
+    sheet = spreadsheet.sheet1
+
+    data = request.get_json()
+    if not all(k in data for k in ("nombre", "email", "mensaje")):
+        return jsonify({"error": "Faltan campos"}), 400
+
+    fila = [data['nombre'], data['email'], data['mensaje']]
+    sheet.append_row(fila)
+
+    return jsonify({"mensaje": "Datos agregados correctamente"}), 201
 
 def cleanup():
     """

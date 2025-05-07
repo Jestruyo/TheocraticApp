@@ -1,3 +1,4 @@
 # .gitignore
 .env
 __pycache__/
+app/credentials_googlesheets.json

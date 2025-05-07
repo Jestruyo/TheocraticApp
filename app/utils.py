@@ -12,6 +12,10 @@ ACCOUNT_SID = os.getenv('ACCOUNT_SID')
 AUTH_TOKEN = os.getenv('AUTH_TOKEN')
 TWILIO_PHONE = os.getenv('TWILIO_PHONE')  # Número de Twilio Sandbox
 
+# Scopes path de google
+SCOPES = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+SPREADSHEET = os.getenv('GOOGLE_SPREADSHEET')
+
 # Configuración de usuarios
 USERS = {
     'admin': {

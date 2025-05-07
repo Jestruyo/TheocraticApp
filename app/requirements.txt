@@ -1,5 +1,5 @@
 Flask==2.3.2
 twilio==8.0.0
+gspread==5.11.0
+oauth2client
 python-dotenv==1.0.0
-gunicorn==20.1.0  # Para producción
-python-dateutil==2.8.2  # Para manejo de tiempos

@@ -63,6 +63,48 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente:
      Respuesta automática:
      - El backend responderá con: ¡Hola! Bienvenido. ¿Cuál es tu nombre?.
 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## 📄 Integración con Google Sheets usando Flask y gspread
+
+Esta API permite recibir datos vía POST y guardarlos directamente en una hoja de cálculo de Google Sheets.
+
+# 🧰 Requisitos
+     - Python 3.7+
+     - Cuenta de Google
+     - Proyecto en Google Cloud Platform
+     - Habilitación de Google Sheets API y Google Drive API
+     - Librerías: Flask, gspread, oauth2client
+
+## 🛠️ Configuración paso a paso
+
+* 1) # Crear un proyecto en Google Cloud
+     - Ir a Google Cloud Console.
+     - Crear un nuevo proyecto o usar uno existente.
+     - Anota el Project ID para futuras referencias.
+
+* 2) # Habilitar APIs necesarias
+     - Habilita las siguientes APIs para tu proyecto:
+     - Google Sheets API
+     - Google Drive API
+
+* 3) # Crear una cuenta de servicio
+     En el panel izquierdo de GCP, ve a "IAM y administración" → "Cuentas de servicio".
+     Haz clic en "Crear cuenta de servicio".
+     Asigna un nombre y continúa.
+     Da el rol Editor o Editor de hojas de cálculo.
+     Finaliza y guarda.
+
+     En la lista de cuentas, haz clic en la cuenta recién creada y selecciona "Agregar clave" → "Crear nueva clave".
+     Selecciona JSON y descarga el archivo credenciales.json.
+     Mueve este archivo a tu directorio del proyecto Flask (no lo subas a Git).
+
+* 4) # Compartir tu hoja de cálculo con la cuenta de servicio
+     - Crea una hoja de cálculo vacía en Google Sheets.
+     - Copia el nombre exacto (por ejemplo: datos_api).
+     - Comparte el documento con el email que aparece en el campo "client_email" del archivo credenciales.json. El nombre del archivo puede ser diferente.
+
 ## Licencia 📜
 Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más detalles.
 ¡Gracias por usar este proyecto! Si tienes alguna pregunta, no dudes en abrir un issue o contactarme. 🚀
