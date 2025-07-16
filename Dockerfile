@@ -9,13 +9,15 @@ WORKDIR /app
 RUN apk add --no-cache gcc musl-dev libffi-dev openssl-dev
 
 # Copiar los archivos de requisitos
-COPY app/requirements.txt .
+COPY . .
 
 # Instalar las dependencias de Python
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Exponer el puerto 5000
 EXPOSE 5000
+
+ENV PYTHONPATH=/app
 
 # Comando para ejecutar la aplicación
 CMD ["python", "main.py"]
